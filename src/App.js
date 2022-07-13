@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { getApiData } from './action/action';
-import Com from './Com';
-import { useEffect } from 'react';
+import React, { useContext, useEffect, createContext } from 'react';
+import Cart from './components/cart';
+import Product from './components/product';
+import Total from './components/total';
+import Home from './components/home';
+
+import {Route, Routes, Link} from 'react-router-dom'
+import Error from './components/error ';
+import Navbar from './components/navbar';
+import apidata from './apidata/api';
+import axios from 'axios'
 
 function App() {
-  const myState = useSelector((state) => {
-    console.log(state)
-    return state
-  });
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getApiData("https://api.publicapis.org/entries"))
-  }, [])
+// useEffect(() => {
+//   axios.get("https://fakestoreapi.com/products")
+//     .then(response => {
+//           console.log(response.data);
+//     })
+//     .catch(e => {
+//         console.log(e);
+
+//     })
+// })
+  
   return (
-    <div className="App">
-      <button onClick={() => dispatch(getApiData("https://api.publicapis.org/entries"))}>Grt Data</button>
-      <Com />
-    </div>
+    <>
+      <div className='App'>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/cart' element={<Cart/>} />
+        <Route path='/product' element={<Product/>} />
+        <Route path='/total' element={<Total/>} />
+        <Route path='*' element={<Error/>}/>
+      </Routes>
+      </div>
+    </>
   );
 }
 
